@@ -122,6 +122,13 @@ java -jar finance-web-app/target/finance-web-app-1.0.0.jar
 
 第三方回调地址、密钥、模板 ID 请通过管理端“系统配置”或环境变量配置，不要提交到仓库。
 
+## 前端与部署
+
+- 前端构建产物：[frontend/README.md](frontend/README.md)
+- 后端配置与启停脚本：[deploy/README.md](deploy/README.md)
+
+> 仓库中的前端是构建产物，不是源码；需要改 UI 请使用前端工程重新构建。
+
 ## 目录结构
 
 ```text
