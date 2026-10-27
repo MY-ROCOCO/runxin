@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>finance-admin-module</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-admin-business</artifactId>
+    <packaging>jar</packaging>
+    <description>业务功能插件</description>
+
+    <dependencies>
+        <!-- 引入开发工具接口，用于配置信息 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-dev-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-production-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-business-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-auth-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-biz-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-payments-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-client-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
+                    <compilerArgs>
+                        <arg>-J-Dfile.encoding=UTF-8</arg>
+                        <arg>-J-XX:+UseG1GC</arg>
+                    </compilerArgs>
+                    <fork>true</fork>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

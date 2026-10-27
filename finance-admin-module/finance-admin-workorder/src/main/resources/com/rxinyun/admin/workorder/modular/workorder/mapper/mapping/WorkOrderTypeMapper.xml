@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.workorder.modular.workorder.mapper.WorkOrderTypeMapper">
+
+    <resultMap type="com.rxinyun.admin.workorder.modular.workorder.entity.WorkOrderType" id="WorkOrderTypeMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="typeName" column="TYPE_NAME" jdbcType="VARCHAR"/>
+        <result property="isRelevance" column="IS_RELEVANCE" jdbcType="INTEGER"/>
+        <result property="status" column="STATUS" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

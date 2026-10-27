@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.production.modular.ecs.available.mapper.MemberAvailableRegionMapper">
+
+    <resultMap type="com.rxinyun.member.production.modular.ecs.available.entity.MemberAvailableRegion" id="ServerAvailableRegionMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="regionId" column="REGION_ID" jdbcType="VARCHAR"/>
+        <result property="availableName" column="AVAILABLE_NAME" jdbcType="VARCHAR"/>
+        <result property="maxYear" column="MAX_YEAR" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="address" column="ADDRESS" jdbcType="VARCHAR"/>
+        <result property="dcimControllerGuid" column="DCIM_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="ipmiControllerGuid" column="IPMI_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="serverControllerGuid" column="SERVER_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="novncControllerGuid" column="NOVNC_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="icpStatus" column="ICP_STATUS" jdbcType="INTEGER"/>
+        <result property="whiteListStatus" column="WHITE_LIST_STATUS" jdbcType="INTEGER"/>
+        <result property="casualVlanStatus" column="CASUAL_VLAN_STATUS" jdbcType="INTEGER"/>
+        <result property="casualVlanId" column="CASUAL_VLAN_ID" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectByRegionId" resultType="com.rxinyun.member.production.modular.ecs.available.response.MemberAvailableRegionResponse">
+        SELECT sar.*, sr.region_name AS regionName
+        FROM server_available_region sar
+                 LEFT JOIN server_region sr ON sar.region_id = sr.id
+        where sar.DELETE_FLAG = 'NOT_DELETE' and sar.STATUS = 1
+          AND REGION_ID = #{regionId}
+        ORDER BY sar.SORT_ID
+    </select>
+
+</mapper>

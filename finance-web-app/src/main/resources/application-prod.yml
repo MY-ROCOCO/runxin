@@ -1,0 +1,245 @@
+server:
+  port: 82
+spring:
+  web:
+    resources:
+      add-mappings: false
+  main:
+    allow-circular-references: true
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:runxinyun}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&useInformationSchema=true
+          username: 数据库账号
+          password: ${DB_PASSWORD:}
+      strict: true
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: ${DRUID_LOGIN_PASSWORD:}
+      public-key: ${DRUID_PUBLIC_KEY:}
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1
+      validation-query-timeout: 2000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat
+      break-after-acquire-failure: false
+      connection-error-retry-attempts: 3
+      fail-fast: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    # 如果数据库不是空表，需要设置成 true，否则启动报错
+    baseline-on-migrate: true
+    # 与 baseline-on-migrate: true 搭配使用
+    baseline-version: 0
+    encoding: UTF-8
+    # 开发环境最好开启 outOfOrder, 生产环境关闭 outOfOrder .
+    out-of-order: false
+    # 禁止清理数据库表 生产环境 true
+    clean-disabled: true
+    # 校验
+    validate-on-migrate: true
+    init-sql: SET FOREIGN_KEY_CHECKS=0
+    backup:
+      enabled: false  # 总开关
+      skip-empty-db: true  # 是否跳过空数据库
+  task:
+    scheduling:
+      enabled=true:
+  data:
+    redis:
+      database: 1
+      host: localhost
+      port: 6379
+      password:
+      timeout: 10s
+      lettuce:
+        pool:
+          max-active: 200
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 0
+
+jackson:
+  time-zone: GMT+8
+  date-format: yyyy-MM-dd HH:mm:ss
+  locale: zh_CN
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    jdbc-type-for-null: null
+  global-config:
+    banner: false
+    enable-sql-runner: true
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: DELETE_FLAG
+      logic-delete-value: DELETED
+      logic-not-delete-value: NOT_DELETE
+  mapper-locations:
+    - classpath*:com/rxinyun/*/*/modular/*/mapper/mapping/*.xml
+    - classpath*:com/rxinyun/*/*/modular/*/*/mapper/mapping/*.xml
+
+  type-handlers-package: com.rxinyun.common.handler
+
+easy-trans:
+  is-enable-redis: true
+  is-enable-global: true
+  is-enable-tile: true
+  is-enable-cloud: false
+
+sa-token:
+  token-name: token
+  timeout: 3600
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  max-login-count: -1
+  token-style: random-32
+  is-log: false
+  is-print: false
+  cookie:
+    httpOnly: true
+    sameSite: Lax
+    secure: true
+  alone-redis:
+    database: 2
+    host: ${spring.data.redis.host}
+    port: ${spring.data.redis.port}
+    password: ${spring.data.redis.password}
+    timeout: ${spring.data.redis.timeout}
+    lettuce:
+      pool:
+        max-active: ${spring.data.redis.lettuce.pool.max-active}
+        max-wait: ${spring.data.redis.lettuce.pool.max-wait}
+        max-idle: ${spring.data.redis.lettuce.pool.max-idle}
+        min-idle: ${spring.data.redis.lettuce.pool.min-idle}
+
+knife4j:
+  enable: true
+  production: false
+  basic:
+    enable: true
+    username: admin
+    password: ${KNIFE4J_PASSWORD:}
+  setting:
+    enableOpenApi: false
+    enableSwaggerModels: false
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Copyright 2024 RUNXIN
+springdoc:
+  default-flat-param-object: true
+  group-configs[0]:
+    group: RUNXIN-MEMBER-AUTH
+    display-name: RUNXIN-MEMBER-AUTH
+    packages-to-scan: com.rxinyun.member.auth
+  group-configs[1]:
+    group: RUNXIN-MEMBER-PRODUCTION
+    display-name: RUNXIN-MEMBER-PRODUCTION
+    packages-to-scan: com.rxinyun.member.production
+  group-configs[2]:
+    group: RUNXIN-MEMBER-ORDER
+    display-name: RUNXIN-MEMBER-ORDER
+    packages-to-scan: com.rxinyun.member.order
+  group-configs[3]:
+    group: RUNXIN-MEMBER-PAYMENTS
+    display-name: RUNXIN-MEMBER-PAYMENTS
+    packages-to-scan: com.rxinyun.member.payments
+  group-configs[4]:
+    group: RUNXIN-ADMIN-AUTH
+    display-name: RUNXIN-ADMIN-AUTH
+    packages-to-scan: com.rxinyun.admin.auth
+  group-configs[5]:
+    group: RUNXIN-ADMIN-SYSTEM
+    display-name: RUNXIN-ADMIN-SYSTEM
+    packages-to-scan: com.rxinyun.admin.system
+  group-configs[6]:
+    group: RUNXIN-ADMIN-MEMBER
+    display-name: RUNXIN-ADMIN-MEMBER
+    packages-to-scan: com.rxinyun.admin.member
+  group-configs[7]:
+    group: RUNXIN-ADMIN-PRODUCTION
+    display-name: RUNXIN-ADMIN-PRODUCTION
+    packages-to-scan: com.rxinyun.admin.production
+  group-configs[8]:
+    group: RUNXIN-ADMIN-ORDER
+    display-name: RUNXIN-ADMIN-ORDER
+    packages-to-scan: com.rxinyun.admin.order
+  group-configs[9]:
+    group: RUNXIN-ADMIN-BUSINESS
+    display-name: RUNXIN-ADMIN-BUSINESS
+    packages-to-scan: com.rxinyun.admin.business
+  group-configs[10]:
+    group: RUNXIN-ADMIN-DEV
+    display-name: RUNXIN-ADMIN-DEV
+    packages-to-scan: com.rxinyun.admin.dev
+  group-configs[11]:
+    group: RUNXIN-MEMBER-BUSINESS
+    display-name: RUNXIN-MEMBER-BUSINESS
+    packages-to-scan: com.rxinyun.member.business
+  group-configs[12]:
+    group: RUNXIN-MEMBER-TOOLS
+    display-name: RUNXIN-MEMBER-TOOLS
+    packages-to-scan: com.rxinyun.member.tools
+  group-configs[13]:
+    group: RUNXIN-ADMIN-PAYMENTS
+    display-name: RUNXIN-ADMIN-PAYMENTS
+    packages-to-scan: com.rxinyun.admin.payments
+  group-configs[14]:
+    group: RUNXIN-ADMIN-NEWS
+    display-name: RUNXIN-ADMIN-NEWS
+    packages-to-scan: com.rxinyun.admin.news
+  group-configs[15]:
+    group: RUNXIN-MEMBER-NEWS
+    display-name: RUNXIN-MEMBER-NEWS
+    packages-to-scan: com.rxinyun.member.news
+  group-configs[16]:
+    group: RUNXIN-ADMIN-WORKORDER
+    display-name: RUNXIN-ADMIN-WORKORDER
+    packages-to-scan: com.rxinyun.admin.workorder
+  group-configs[17]:
+    group: RUNXIN-MEMBER-WORKORDER
+    display-name: RUNXIN-MEMBER-WORKORDER
+    packages-to-scan: com.rxinyun.member.workorder
+  group-configs[18]:
+    group: RUNXIN-ADMIN-WORKBENCH
+    display-name: RUNXIN-ADMIN-WORKBENCH
+    packages-to-scan: com.rxinyun.admin.workbench
+  group-configs[19]:
+    group: RUNXIN-ADMIN-MARKETING
+    display-name: RUNXIN-ADMIN-MARKETING
+    packages-to-scan: com.rxinyun.admin.marketing
+runxin:
+  config:
+    common:
+      front-url: http://localhost:81
+      backend-url: http://localhost:82
+
+update:
+  server:
+    url: ${UPDATE_SERVER_URL:http://localhost:8080}
+    command-timeout: 30
+    # 本地脚本路径
+    script-path: ${UPDATE_SCRIPT_PATH:/path/to/local/script.sh}
+    # 后端安装目录
+    back-install-dir: ${BACK_INSTALL_DIR:/path/to/back/install}
+

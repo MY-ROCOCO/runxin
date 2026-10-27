@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.production.modular.independent.machine.mapper.MachineLineMapper">
+
+ <resultMap type="com.rxinyun.admin.production.modular.independent.machine.entity.MachineLine" id="MachineLineMap">
+     <result property="id" column="ID" jdbcType="VARCHAR"/>
+     <result property="lineId" column="LINE_ID" jdbcType="VARCHAR"/>
+     <result property="machineId" column="MACHINE_ID" jdbcType="VARCHAR"/>
+ </resultMap>
+
+</mapper>

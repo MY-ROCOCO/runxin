@@ -1,0 +1,6 @@
+-- 应用发布版本（写入后台「系统版本」配置，供前端/关于页等展示）
+-- 若与根 pom 中 finance.version 不一致，请同步修改本脚本中的版本号后再发布
+UPDATE `dev_config` SET `CONFIG_VALUE` = '1.2.5' WHERE `CONFIG_KEY` = 'RUNXIN_SYS_VERSION';
+
+INSERT INTO `sys_resource` (`ID`, `PARENT_ID`, `TITLE`, `NAME`, `CODE`, `CATEGORY`, `MODULE`, `MENU_TYPE`, `PATH`, `COMPONENT`, `ICON`, `COLOR`, `VISIBLE`, `SORT_CODE`, `EXT_JSON`, `DELETE_FLAG`, `CREATE_TIME`, `CREATE_USER`, `UPDATE_TIME`, `UPDATE_USER`) VALUES ('2040363667920347137', '1954826071656394753', '退款管理', NULL, NULL, 'MENU', '1548901111999770525', 'CATALOG', '/financeadmin/refund', NULL, 'mdi:cash-refund', NULL, 'TRUE', '2', 'mdi:cash-refund', 'NOT_DELETE', '2026-04-04 17:39:41', '1543837863788879871', NULL, NULL);
+INSERT INTO `sys_resource` (`ID`, `PARENT_ID`, `TITLE`, `NAME`, `CODE`, `CATEGORY`, `MODULE`, `MENU_TYPE`, `PATH`, `COMPONENT`, `ICON`, `COLOR`, `VISIBLE`, `SORT_CODE`, `EXT_JSON`, `DELETE_FLAG`, `CREATE_TIME`, `CREATE_USER`, `UPDATE_TIME`, `UPDATE_USER`) VALUES ('2040364311423049730', '2040363667920347137', '退款审核', 'financeadmin_refund_refundaudit', NULL, 'MENU', '1548901111999770525', 'MENU', '/financeadmin/refund/refundaudit', 'financeadmin/refund_refundaudit', 'mdi:file-document-check-outline', NULL, 'TRUE', '1', 'mdi:file-document-check-outline', 'NOT_DELETE', '2026-04-04 17:42:15', '1543837863788879871', NULL, NULL);

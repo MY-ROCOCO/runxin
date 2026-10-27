@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.business.modular.independent.mapper.IndependentMapper">
+
+    <resultMap type="com.rxinyun.admin.business.modular.independent.entity.Independent" id="IndependentMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="regionId" column="region_id" jdbcType="VARCHAR"/>
+        <result property="lineId" column="line_id" jdbcType="VARCHAR"/>
+        <result property="machineId" column="machine_id" jdbcType="VARCHAR"/>
+        <result property="machineName" column="machine_name" jdbcType="VARCHAR"/>
+        <result property="serverName" column="server_name" jdbcType="VARCHAR"/>
+        <result property="port" column="port" jdbcType="INTEGER"/>
+        <result property="serverIp" column="server_ip" jdbcType="VARCHAR"/>
+        <result property="systemUserName" column="system_user_name" jdbcType="VARCHAR"/>
+        <result property="systemPassword" column="system_password" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="serverStatus" column="server_status" jdbcType="VARCHAR"/>
+        <result property="businessStatus" column="business_status" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="automation" column="automation" jdbcType="INTEGER"/>
+        <result property="cpuInfo" column="cpu_info" jdbcType="VARCHAR"/>
+        <result property="ramInfo" column="ram_info" jdbcType="VARCHAR"/>
+        <result property="disksInfo" column="disks_info" jdbcType="VARCHAR"/>
+        <result property="ipSize" column="ip_size" jdbcType="INTEGER"/>
+        <result property="defense" column="defense" jdbcType="INTEGER"/>
+        <result property="bandwidth" column="bandwidth" jdbcType="INTEGER"/>
+        <result property="upgrades" column="upgrades" jdbcType="INTEGER"/>
+        <result property="buyTime" column="buy_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="deleteTime" column="delete_time" jdbcType="TIMESTAMP"/>
+        <result property="memberNo" column="member_no" jdbcType="INTEGER"/>
+        <result property="renewAuto" column="renew_auto" jdbcType="INTEGER"/>
+        <result property="renewPrice" column="renew_price" jdbcType="NUMERIC"/>
+        <result property="memberRemark" column="member_remark" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="systemClassId" column="system_class_id" jdbcType="VARCHAR"/>
+        <result property="systemClass" column="system_class" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="systemName" column="system_name" jdbcType="VARCHAR"/>
+        <result property="resourcePoolId" column="resource_pool_id" jdbcType="VARCHAR"/>
+        <result property="upstreamServerId" column="upstream_server_id" jdbcType="VARCHAR"/>
+    </resultMap>
+    <update id="updateServerStatus">
+        update BUSINESS_INDEPENDENT
+        set BUSINESS_STATUS = -1
+        where ID = #{id} and BUSINESS_STATUS = 1 and DELETE_FLAG = 'NOT_DELETE'
+    </update>
+
+    <select id="getServersToCheck" resultMap="IndependentMap">
+        select * from BUSINESS_INDEPENDENT
+        where BUSINESS_STATUS = 1
+          and DELETE_FLAG = 'NOT_DELETE'
+          and END_TIME &lt;= #{sevenDaysLater}
+    </select>
+    <select id="getServersForAutoRenew" resultMap="IndependentMap">
+        select * from BUSINESS_INDEPENDENT
+        where BUSINESS_STATUS = 1
+          and DELETE_FLAG = 'NOT_DELETE'
+          and renew_auto = 1
+          and END_TIME &gt; now()
+          and END_TIME &lt;= #{windowEnd}
+    </select>
+    <select id="getServersToDeleteCheck" resultMap="IndependentMap">
+        select * from BUSINESS_INDEPENDENT
+        where BUSINESS_STATUS = -1
+          and DELETE_FLAG = 'NOT_DELETE'
+          and DELETE_TIME &lt;= now()
+    </select>
+</mapper>
+

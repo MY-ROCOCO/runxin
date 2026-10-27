@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>runxin-finance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-plugin-api</artifactId>
+    <packaging>pom</packaging>
+    <description>插件接口契约聚合模块 (重建)</description>
+
+    <modules>
+        <module>finance-plugin-auth-api</module>
+        <module>finance-plugin-biz-api</module>
+        <module>finance-plugin-business-api</module>
+        <module>finance-plugin-client-api</module>
+        <module>finance-plugin-dev-api</module>
+        <module>finance-plugin-marketing-api</module>
+        <module>finance-plugin-order-api</module>
+        <module>finance-plugin-payments-api</module>
+        <module>finance-plugin-production-api</module>
+        <module>finance-plugin-sys-api</module>
+        <module>finance-plugin-workorder-api</module>
+    </modules>
+</project>

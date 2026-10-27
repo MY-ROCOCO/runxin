@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.production.modular.esc.cloud.mapper.ServerDiscountsMapper">
+
+    <resultMap type="com.rxinyun.admin.production.modular.esc.cloud.entity.ServerDiscounts" id="ServerDiscountsMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="durationMonths" column="DURATION_MONTHS" jdbcType="INTEGER"/>
+        <result property="discountRate" column="DISCOUNT_RATE" jdbcType="NUMERIC"/>
+        <result property="productType" column="PRODUCT_TYPE" jdbcType="INTEGER"/>
+        <result property="userType" column="USER_TYPE" jdbcType="INTEGER"/>
+        <result property="startDate" column="START_DATE" jdbcType="TIMESTAMP"/>
+        <result property="endDate" column="END_DATE" jdbcType="TIMESTAMP"/>
+        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>
+

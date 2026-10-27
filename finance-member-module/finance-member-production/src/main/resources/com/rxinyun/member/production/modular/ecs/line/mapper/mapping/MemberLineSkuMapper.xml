@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.production.modular.ecs.line.mapper.MemberLineSkuMapper">
+
+    <resultMap type="com.rxinyun.member.production.modular.ecs.line.entity.MemberLineSku" id="ServerLineSkuMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="lineId" column="LINE_ID" jdbcType="INTEGER"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="cpu" column="CPU" jdbcType="INTEGER"/>
+        <result property="ram" column="RAM" jdbcType="INTEGER"/>
+        <result property="osPrice" column="OS_PRICE" jdbcType="NUMERIC"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="recommendStatus" column="RECOMMEND_STATUS" jdbcType="INTEGER"/>
+        <result property="recommendContent" column="RECOMMEND_CONTENT" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="DELETE_FLAG" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>
+

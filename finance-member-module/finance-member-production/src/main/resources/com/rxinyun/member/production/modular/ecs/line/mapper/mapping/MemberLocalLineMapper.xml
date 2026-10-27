@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.production.modular.ecs.line.mapper.MemberLocalLineMapper">
+
+    <resultMap type="com.rxinyun.member.production.modular.ecs.line.entity.MemberLocalLine" id="ServerLocalLineMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="availableId" column="AVAILABLE_ID" jdbcType="VARCHAR"/>
+        <result property="availableName" column="AVAILABLE_NAME" jdbcType="VARCHAR"/>
+        <result property="lineName" column="LINE_NAME" jdbcType="VARCHAR"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+<result property="upgradeStatus" column="UPGRADE_STATUS" jdbcType="INTEGER"/>
+        <result property="renewStatus" column="RENEW_STATUS" jdbcType="INTEGER"/>
+<result property="maxOpenNum" column="MAX_OPEN_NUM" jdbcType="INTEGER"/>
+        <result property="purchaseDurations" column="PURCHASE_DURATIONS" jdbcType="VARCHAR"
+                typeHandler="com.rxinyun.common.handler.IntegerListTypeHandler"/>
+        <result property="sortId" column="SORT_ID" jdbcType="INTEGER"/>
+        <result property="masterIndex" column="MASTER_INDEX" jdbcType="INTEGER"/>
+        <result property="ipRand" column="IP_RAND" jdbcType="INTEGER"/>
+        <result property="snapPriceType" column="SNAP_PRICE_TYPE" jdbcType="INTEGER"/>
+        <result property="snapOpenMax" column="SNAP_OPEN_MAX" jdbcType="INTEGER"/>
+        <result property="bandwidthMinSize" column="BANDWIDTH_MIN_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthMaxSize" column="BANDWIDTH_MAX_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthFreeSize" column="BANDWIDTH_FREE_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthInType" column="BANDWIDTH_IN_TYPE" jdbcType="INTEGER"/>
+        <result property="bandwidthInValue" column="BANDWIDTH_IN_VALUE" jdbcType="INTEGER"/>
+        <result property="appendIpPrice" column="APPEND_IP_PRICE" jdbcType="VARCHAR"/>
+        <result property="defenseSize" column="DEFENSE_SIZE" jdbcType="VARCHAR"/>
+        <result property="defenseFreeSize" column="DEFENSE_FREE_SIZE" jdbcType="INTEGER"/>
+        <result property="defensePrice" column="DEFENSE_PRICE" jdbcType="VARCHAR"/>
+        <result property="bandwidthPrice" column="BANDWIDTH_PRICE" jdbcType="VARCHAR"/>
+        <result property="autoDns" column="AUTO_DNS" jdbcType="VARCHAR"
+                typeHandler="com.rxinyun.common.handler.ListToStringTypeHandler"/>
+        <result property="descript" column="DESCRIPT" jdbcType="VARCHAR"/>
+        <result property="introUrl" column="INTRO_URL" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="DELETE_FLAG" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getById" resultMap="ServerLocalLineMap">
+        SELECT sll.*, sar.available_name AS AVAILABLE_NAME
+        FROM server_local_line sll
+        LEFT JOIN server_available_region sar ON sll.available_id = sar.id
+        where
+        sar.DELETE_FLAG = 'NOT_DELETE' and sll.DELETE_FLAG = 'NOT_DELETE' and sll.id = #{id}
+    </select>
+
+</mapper>
+

@@ -1,0 +1,6 @@
+-- 应用发布版本（写入后台「系统版本」配置，供前端/关于页等展示）
+-- 若与根 pom 中 finance.version 不一致，请同步修改本脚本中的版本号后再发布
+UPDATE `dev_config` SET `CONFIG_VALUE` = '1.2.6' WHERE `CONFIG_KEY` = 'RUNXIN_SYS_VERSION';
+
+INSERT INTO `sys_resource` (`ID`, `PARENT_ID`, `TITLE`, `NAME`, `CODE`, `CATEGORY`, `MODULE`, `MENU_TYPE`, `PATH`, `COMPONENT`, `ICON`, `COLOR`, `VISIBLE`, `SORT_CODE`, `EXT_JSON`, `DELETE_FLAG`, `CREATE_TIME`, `CREATE_USER`, `UPDATE_TIME`, `UPDATE_USER`) VALUES ('2041436841873367041', '0', '营销管理', NULL, NULL, 'MENU', NULL, 'CATALOG', '/marketing', NULL, 'mdi:bullhorn-outline', NULL, 'TRUE', '11', 'mdi:bullhorn-outline', 'NOT_DELETE', '2026-04-07 16:44:06', '1543837863788879871', '2026-04-07 16:48:43', '1543837863788879871');
+INSERT INTO `sys_resource` (`ID`, `PARENT_ID`, `TITLE`, `NAME`, `CODE`, `CATEGORY`, `MODULE`, `MENU_TYPE`, `PATH`, `COMPONENT`, `ICON`, `COLOR`, `VISIBLE`, `SORT_CODE`, `EXT_JSON`, `DELETE_FLAG`, `CREATE_TIME`, `CREATE_USER`, `UPDATE_TIME`, `UPDATE_USER`) VALUES ('2041437237769527297', '2041436841873367041', '优惠券管理', 'marketing_couponmanager', NULL, 'MENU', NULL, 'MENU', '/marketing/couponmanager', 'marketing/couponmanager/index.vue', 'mdi:ticket-percent-outline', NULL, 'TRUE', '1', 'mdi:ticket-percent-outline', 'NOT_DELETE', '2026-04-07 16:45:40', '1543837863788879871', '2026-04-07 16:47:41', '1543837863788879871');

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.order.modular.ecs.mapper.OrderServerMapper">
+
+    <resultMap type="com.rxinyun.admin.order.modular.ecs.entity.OrderServer" id="OrderServerMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="masterId" column="MASTER_ID" jdbcType="VARCHAR"/>
+        <result property="lineId" column="LINE_ID" jdbcType="VARCHAR"/>
+        <result property="cpu" column="CPU" jdbcType="INTEGER"/>
+        <result property="ram" column="RAM" jdbcType="INTEGER"/>
+        <result property="lineSkuPrice" column="LINE_SKU_PRICE" jdbcType="NUMERIC"/>
+        <result property="harddisks" column="HARDDISKS" jdbcType="INTEGER"/>
+        <result property="harddisksPrice" column="HARDDISKS_PRICE" jdbcType="NUMERIC"/>
+        <result property="bandwidth" column="BANDWIDTH" jdbcType="INTEGER"/>
+        <result property="bandwidthPrice" column="BANDWIDTH_PRICE" jdbcType="NUMERIC"/>
+        <result property="defense" column="DEFENSE" jdbcType="INTEGER"/>
+        <result property="defensePrice" column="DEFENSE_PRICE" jdbcType="NUMERIC"/>
+        <result property="systemClassId" column="SYSTEM_CLASS_ID" jdbcType="VARCHAR"/>
+        <result property="systemId" column="SYSTEM_ID" jdbcType="VARCHAR"/>
+        <result property="loginPassword" column="LOGIN_PASSWORD" jdbcType="VARCHAR"/>
+        <result property="number" column="NUMBER" jdbcType="INTEGER"/>
+        <result property="months" column="MONTHS" jdbcType="INTEGER"/>
+        <result property="renewAuto" column="RENEW_AUTO" jdbcType="INTEGER"/>
+        <result property="isOpen" column="IS_OPEN" jdbcType="INTEGER"/>
+        <result property="serverId" column="SERVER_ID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryById" resultMap="OrderServerMap">
+        select
+            ID, ORDER_NO, MASTER_ID, LINE_ID, CPU, RAM, LINE_SKU_PRICE, HARDDISKS, HARDDISKS_PRICE, BANDWIDTH, BANDWIDTH_PRICE,
+            DEFENSE, DEFENSE_PRICE, SYSTEM_CLASS_ID, SYSTEM_ID, LOGIN_PASSWORD, NUMBER, MONTHS, RENEW_AUTO, IS_OPEN, SERVER_ID
+        from order_server
+        where ID = #{id}
+    </select>
+</mapper>
+

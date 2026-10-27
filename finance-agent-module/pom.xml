@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>runxin-finance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-agent-module</artifactId>
+    <packaging>jar</packaging>
+    <description>代理端模块</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-dev-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-client-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>

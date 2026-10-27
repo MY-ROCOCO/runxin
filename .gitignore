@@ -1,0 +1,16 @@
+.DS_Store
+target/
+*.class
+*.jar
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+
+# local runtime data / secrets
+data/
+.env
+*.log
+*.lic
+private.pem

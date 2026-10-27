@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.production.modular.independent.cloud.mapper.MemberLineMapper">
+
+
+    <resultMap type="com.rxinyun.member.production.modular.independent.cloud.entity.MemberLine" id="WorkOrderMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="regionId" column="REGION_ID" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="yearNumber" column="YEAR_NUMBER" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="stashIp" column="STASH_IP" jdbcType="INTEGER"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.business.modular.task.mapper.AutoTaskMapper">
+    <resultMap id="AutoTaskResultMap" type="com.rxinyun.admin.business.modular.task.entity.AutoTask">
+        <id column="id" property="id"/>
+        <result column="server_id" property="serverId"/>
+        <result column="product_type" property="productType"/>
+        <result column="task_type" property="taskType"/>
+        <result column="execute_time" property="executeTime"/>
+        <result column="task_status" property="taskStatus"/>
+        <result column="task_desc" property="taskDesc"/>
+        <result column="platform" property="platform"/>
+        <result column="create_user" property="createUser"/>
+        <result column="execute_result" property="executeResult"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="params" property="params"/>
+        <result column="retry_count" property="retryCount"/>
+        <result column="max_retry" property="maxRetry"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="next_retry_time" property="nextRetryTime"/>
+        <result column="timeout_time" property="timeoutTime"/>
+    </resultMap>
+</mapper>
+

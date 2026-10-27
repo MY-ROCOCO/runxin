@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>finance-member-module</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-member-order</artifactId>
+    <packaging>jar</packaging>
+    <description>生产功能插件</description>
+
+    <dependencies>
+        <!-- 引入开发工具接口，用于配置信息 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-dev-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-production-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-payments-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-client-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-business-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-marketing-api</artifactId>
+        </dependency>
+
+        <!-- 引入开发工具模块，用于访问ResourcePoolRequestService和ResourcePoolRequestHandler -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-dev</artifactId>
+        </dependency>
+
+        <!-- 引入生产管理模块，用于访问 ServerLocalLineService 和 MachineService -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-production</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-production</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-agent-module</artifactId>
+        </dependency>
+
+        <!-- fastjson2，用于 JSON 处理 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+    </dependencies>
+</project>

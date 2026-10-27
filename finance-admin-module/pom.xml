@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>runxin-finance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-admin-module</artifactId>
+    <packaging>pom</packaging>
+    <description>B 端 (admin) 功能聚合模块 (重建)</description>
+
+    <modules>
+        <module>finance-admin-auth</module>
+        <module>finance-admin-biz</module>
+        <module>finance-admin-business</module>
+        <module>finance-admin-dev</module>
+        <module>finance-admin-marketing</module>
+        <module>finance-admin-member</module>
+        <module>finance-admin-news</module>
+        <module>finance-admin-notice</module>
+        <module>finance-admin-order</module>
+        <module>finance-admin-payments</module>
+        <module>finance-admin-production</module>
+        <module>finance-admin-system</module>
+        <module>finance-admin-workbench</module>
+        <module>finance-admin-workorder</module>
+    </modules>
+</project>

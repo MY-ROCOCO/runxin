@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.production.modular.esc.region.mapper.ServerRegionMapper">
+
+    <resultMap type="com.rxinyun.admin.production.modular.esc.region.entity.ServerRegion" id="ServerRegionMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="regionName" column="REGION_NAME" jdbcType="VARCHAR"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+    </resultMap>
+</mapper>
+

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.production.modular.ecs.master.mapper.MemberMasterMapper">
+
+    <resultMap type="com.rxinyun.member.production.modular.ecs.master.entity.MemberMaster" id="ServerMasterMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="masterName" column="MASTER_NAME" jdbcType="VARCHAR"/>
+        <result property="guardVersion" column="GUARD_VERSION" jdbcType="VARCHAR"/>
+        <result property="localIp" column="LOCAL_IP" jdbcType="VARCHAR"/>
+        <result property="gatewayIp" column="GATEWAY_IP" jdbcType="VARCHAR"/>
+        <result property="switchType" column="SWITCH_TYPE" jdbcType="VARCHAR"/>
+        <result property="ip" column="IP" jdbcType="VARCHAR"/>
+        <result property="apiPort" column="API_PORT" jdbcType="INTEGER"/>
+        <result property="apiPassword" column="API_PASSWORD" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="sortId" column="SORT_ID" jdbcType="INTEGER"/>
+        <result property="remarks" column="REMARKS" jdbcType="VARCHAR"/>
+        <result property="storeType" column="STORE_TYPE" jdbcType="VARCHAR"/>
+        <result property="storeId" column="STORE_ID" jdbcType="VARCHAR"/>
+        <result property="rootPort" column="ROOT_PORT" jdbcType="INTEGER"/>
+        <result property="rootPassword" column="ROOT_PASSWORD" jdbcType="VARCHAR"/>
+        <result property="osPath" column="OS_PATH" jdbcType="VARCHAR"/>
+        <result property="osMaxiops" column="OS_MAXIOPS" jdbcType="INTEGER"/>
+        <result property="disksPath" column="DISKS_PATH" jdbcType="VARCHAR"/>
+        <result property="disksMaxiops" column="DISKS_MAXIOPS" jdbcType="INTEGER"/>
+        <result property="cpuLimit" column="CPU_LIMIT" jdbcType="INTEGER"/>
+        <result property="ramSize" column="RAM_SIZE" jdbcType="INTEGER"/>
+        <result property="ramLimit" column="RAM_LIMIT" jdbcType="INTEGER"/>
+        <result property="harddiskSize" column="HARDDISK_SIZE" jdbcType="INTEGER"/>
+        <result property="harddiskLimit" column="HARDDISK_LIMIT" jdbcType="INTEGER"/>
+        <result property="hvStoreType" column="HV_STORE_TYPE" jdbcType="VARCHAR"/>
+        <result property="hvStoreId" column="HV_STORE_ID" jdbcType="VARCHAR"/>
+        <result property="nodeName" column="NODE_NAME" jdbcType="VARCHAR"/>
+        <result property="memoryDynamic" column="MEMORY_DYNAMIC" jdbcType="INTEGER"/>
+        <result property="ramStart" column="RAM_START" jdbcType="INTEGER"/>
+        <result property="vncUrl" column="VNC_URL" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+        <result property="publicSwitchName" column="PUBLIC_SWITCH_NAME" jdbcType="VARCHAR"/>
+        <result property="privateSwitchName" column="PRIVATE_SWITCH_NAME" jdbcType="VARCHAR"/>
+        <result property="natSwitchName" column="NAT_SWITCH_NAME" jdbcType="VARCHAR"/>
+        <result property="shareIp" column="SHARE_IP" jdbcType="INTEGER"/>
+        <result property="mirrorPath" column="MIRROR_PATH" jdbcType="VARCHAR"/>
+        <result property="backupPath" column="BACKUP_PATH" jdbcType="VARCHAR"/>
+        <result property="taskConcurrency" column="TASK_CONCURRENCY" jdbcType="INTEGER"/>
+        <result property="deleteFlag" column="DELETE_FLAG" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+        <result property="instanceCount" column="INSTANCE_COUNT" jdbcType="INTEGER"/>
+        <result property="ramRemaining" column="RAM_REMAINING" jdbcType="INTEGER"/>
+        <result property="diskRemaining" column="DISK_REMAINING" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="selectFirstByLineId" resultMap="ServerMasterMap">
+        SELECT sm.*
+        FROM server_master sm
+        WHERE sm.DELETE_FLAG = 'NOT_DELETE'
+          AND sm.STATUS = #{status}
+          AND (
+              EXISTS (
+                  SELECT 1
+                  FROM server_master_line sml
+                  WHERE sml.master_id = sm.id
+                    AND sml.line_id = #{lineId}
+                    AND sml.delete_flag = 'NOT_DELETE'
+              )
+          )
+        <choose>
+            <when test="masterIndex == 2">
+                ORDER BY sm.INSTANCE_COUNT ASC
+            </when>
+            <when test="masterIndex == 3">
+                ORDER BY sm.DISK_REMAINING DESC
+            </when>
+            <when test="masterIndex == 4">
+                ORDER BY sm.RAM_REMAINING DESC
+            </when>
+            <otherwise>
+                ORDER BY (GREATEST(IFNULL(sm.SORT_ID, 1), 1) / (IFNULL(sm.INSTANCE_COUNT, 0) + 1)) DESC,
+                         GREATEST(IFNULL(sm.SORT_ID, 1), 1) DESC,
+                         IFNULL(sm.INSTANCE_COUNT, 0) ASC
+            </otherwise>
+        </choose>
+        LIMIT 1
+    </select>
+
+    <update id="updateHostStats">
+        UPDATE server_master
+        SET INSTANCE_COUNT = #{instanceCount},
+            RAM_REMAINING = #{ramRemaining},
+            DISK_REMAINING = #{diskRemaining}
+        WHERE ID = #{masterId}
+    </update>
+
+</mapper>
+

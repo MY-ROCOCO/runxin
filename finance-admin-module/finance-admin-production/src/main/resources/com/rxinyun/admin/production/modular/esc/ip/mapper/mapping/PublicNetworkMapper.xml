@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.production.modular.esc.ip.mapper.PublicNetworkMapper">
+
+    <resultMap type="com.rxinyun.admin.production.modular.esc.ip.entity.PublicNetwork" id="PublicNetworkMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="lineId" column="LINE_ID" jdbcType="VARCHAR"/>
+        <result property="masterId" column="MASTER_ID" jdbcType="VARCHAR"/>
+        <result property="masterIp" column="masterIp" jdbcType="VARCHAR"/>
+        <result property="masterName" column="masterName" jdbcType="VARCHAR"/>
+        <result property="lineName" column="lineName" jdbcType="VARCHAR"/>
+        <result property="ip" column="IP" jdbcType="VARCHAR"/>
+        <result property="networkIds" column="NETWORK_IDS" jdbcType="VARCHAR"/>
+        <result property="mask" column="MASK" jdbcType="VARCHAR"/>
+        <result property="gateway" column="GATEWAY" jdbcType="VARCHAR"/>
+        <result property="vlanId" column="VLAN_ID" jdbcType="INTEGER"/>
+        <result property="cname" column="CNAME" jdbcType="VARCHAR"/>
+        <result property="enable" column="ENABLE" jdbcType="INTEGER"/>
+        <result property="remarks" column="REMARKS" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="DELETE_FLAG" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <delete id="removeByIds">
+        DELETE FROM public_network WHERE ID IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="selectPage" resultMap="PublicNetworkMap">
+        SELECT pn.*, sll.line_name AS lineName, sm.ip AS masterIp, sm.master_name AS masterName
+        FROM public_network pn
+        LEFT JOIN server_local_line sll ON pn.line_id = sll.id
+        LEFT JOIN server_master sm ON pn.master_id = sm.id
+        <where>
+            pn.DELETE_FLAG = 'NOT_DELETE'
+            <if test="pageParam.searchKey != null and pageParam.searchKey != ''">
+                AND (
+                sll.line_name LIKE CONCAT('%', #{pageParam.searchKey}, '%')
+                OR pn.ip LIKE CONCAT('%', #{pageParam.searchKey}, '%')
+                OR sm.ip LIKE CONCAT('%', #{pageParam.searchKey}, '%')
+                )
+            </if>
+            <if test="pageParam.masterId != null and pageParam.masterId != ''">
+                AND pn.MASTER_ID = #{pageParam.masterId}
+            </if>
+            <if test="pageParam.lineId != null and pageParam.lineId != ''">
+                AND pn.LINE_ID = #{pageParam.lineId}
+            </if>
+            <if test="pageParam.enable != null">
+                AND pn.ENABLE = #{pageParam.enable}
+            </if>
+            <if test="pageParam.ip != null">
+                AND pn.IP = #{pageParam.ip}
+            </if>
+        </where>
+            ORDER BY pn.id DESC
+    </select>
+    <select id="findByIpAddress" resultMap="PublicNetworkMap">
+        SELECT * FROM public_network
+        WHERE DELETE_FLAG = 'NOT_DELETE' AND IP = #{ipAddress}
+    </select>
+
+</mapper>
+

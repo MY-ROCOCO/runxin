@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.production.modular.ecs.ip.mapper.MemberNatNetworkMapper">
+
+    <resultMap type="com.rxinyun.member.production.modular.ecs.ip.entity.MemberNatNetwork" id="NatNetworkMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="lineId" column="LINE_ID" jdbcType="VARCHAR"/>
+        <result property="masterId" column="MASTER_ID" jdbcType="VARCHAR"/>
+        <result property="ip" column="IP" jdbcType="VARCHAR"/>
+        <result property="networkIds" column="NETWORK_IDS" jdbcType="VARCHAR"/>
+        <result property="mask" column="MASK" jdbcType="VARCHAR"/>
+        <result property="gateway" column="GATEWAY" jdbcType="VARCHAR"/>
+        <result property="vlanId" column="VLAN_ID" jdbcType="INTEGER"/>
+        <result property="cname" column="CNAME" jdbcType="VARCHAR"/>
+        <result property="enable" column="ENABLE" jdbcType="INTEGER"/>
+        <result property="remarks" column="REMARKS" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="DELETE_FLAG" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAvailableNatNetwork" resultMap="NatNetworkMap">
+        SELECT * FROM NAT_NETWORK
+        WHERE enable = 0
+        <if test="masterId != null and masterId != ''">
+            AND master_id = #{masterId}
+        </if>
+        LIMIT 1
+    </select>
+
+</mapper>
+

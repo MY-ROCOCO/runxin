@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>runxin-finance</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-web-app</artifactId>
+    <packaging>jar</packaging>
+    <description>主启动模块</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- dynamic-datasource -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+        </dependency>
+
+        <!-- mysql -->
+         <dependency>
+             <groupId>com.mysql</groupId>
+             <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+
+        <!-- postgresql -->
+        <!--<dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>-->
+
+        <!-- oracle -->
+        <!--<dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc10</artifactId>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>com.oracle.database.nls</groupId>
+            <artifactId>orai18n</artifactId>
+        </dependency>-->
+
+        <!-- mssql -->
+        <!--<dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+        </dependency>-->
+
+        <!-- 达梦数据库 -->
+        <!--<dependency>
+            <groupId>com.dameng</groupId>
+            <artifactId>DmJdbcDriver18</artifactId>
+        </dependency>-->
+
+        <!-- 人大金仓数据库 -->
+        <!--<dependency>
+            <groupId>cn.com.kingbase</groupId>
+            <artifactId>kingbase8</artifactId>
+        </dependency>-->
+
+        <!-- 登录鉴权插件 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-auth</artifactId>
+        </dependency>
+
+        <!-- 业务功能插件 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-biz</artifactId>
+        </dependency>
+
+        <!-- 开发工具插件 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-dev</artifactId>
+        </dependency>
+
+        <!-- 系统功能插件 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-system</artifactId>
+        </dependency>
+
+        <!-- 会员管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-member</artifactId>
+        </dependency>
+
+        <!-- 生产管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-production</artifactId>
+        </dependency>
+
+        <!-- 订单管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-order</artifactId>
+        </dependency>
+
+        <!-- 会员支付管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-payments</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-marketing</artifactId>
+        </dependency>
+
+        <!-- 会员登录鉴权 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-auth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-agent-module</artifactId>
+        </dependency>
+
+        <!-- 会员生产管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-production</artifactId>
+        </dependency>
+
+        <!-- 会员订单管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-order</artifactId>
+        </dependency>
+
+        <!-- 会员支付管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-payments</artifactId>
+        </dependency>
+
+
+        <!-- 业务管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-business</artifactId>
+        </dependency>
+
+        <!-- 新闻管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-news</artifactId>
+        </dependency>
+
+       <!--   工作台管理功能    -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-workbench</artifactId>
+        </dependency>
+
+        <!-- 通知管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-notice</artifactId>
+        </dependency>
+
+        <!-- 业务管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-business</artifactId>
+        </dependency>
+
+        <!-- 业务管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-tools</artifactId>
+        </dependency>
+
+        <!-- 新闻管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-news</artifactId>
+        </dependency>
+
+        <!-- 工单管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-admin-workorder</artifactId>
+        </dependency>
+
+        <!-- 工单管理功能 -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-workorder</artifactId>
+        </dependency>
+
+        <!-- finance-member-marketing -->
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-member-marketing</artifactId>
+        </dependency>
+        <!-- 会员管理 -->
+<!--        <dependency>-->
+<!--            <groupId>com.rxinyun</groupId>-->
+<!--            <artifactId>finance-member-client</artifactId>-->
+<!--        </dependency>-->
+
+        <!-- 移动端 -->
+<!--        <dependency>-->
+<!--            <groupId>com.rxinyun</groupId>-->
+<!--            <artifactId>finance-member-mobile</artifactId>-->
+<!--        </dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.production.modular.esc.cloud.mapper.ServerLocalLineMapper">
+
+    <resultMap type="com.rxinyun.admin.production.modular.esc.cloud.entity.ServerLocalLine" id="ServerLocalLineMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="availableId" column="AVAILABLE_ID" jdbcType="VARCHAR"/>
+        <result property="lineName" column="LINE_NAME" jdbcType="VARCHAR"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+<result property="upgradeStatus" column="UPGRADE_STATUS" jdbcType="INTEGER"/>
+        <result property="renewStatus" column="RENEW_STATUS" jdbcType="INTEGER"/>
+<result property="maxOpenNum" column="MAX_OPEN_NUM" jdbcType="INTEGER"/>
+        <result property="purchaseDurations" column="PURCHASE_DURATIONS" typeHandler="com.rxinyun.common.handler.IntegerListTypeHandler"/>
+        <result property="sortId" column="SORT_ID" jdbcType="INTEGER"/>
+        <result property="masterIndex" column="MASTER_INDEX" jdbcType="INTEGER"/>
+        <result property="ipRand" column="IP_RAND" jdbcType="INTEGER"/>
+        <result property="snapPriceType" column="SNAP_PRICE_TYPE" jdbcType="INTEGER"/>
+        <result property="snapOpenMax" column="SNAP_OPEN_MAX" jdbcType="INTEGER"/>
+        <result property="dataDiskMinSize" column="DATA_DISK_MIN_SIZE" jdbcType="INTEGER"/>
+        <result property="dataDiskMaxSize" column="DATA_DISK_MAX_SIZE" jdbcType="INTEGER"/>
+        <result property="dataDiskStep" column="DATA_DISK_STEP" jdbcType="INTEGER"/>
+        <result property="dataDiskFreeSize" column="DATA_DISK_FREE_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthMinSize" column="BANDWIDTH_MIN_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthMaxSize" column="BANDWIDTH_MAX_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthFreeSize" column="BANDWIDTH_FREE_SIZE" jdbcType="INTEGER"/>
+        <result property="bandwidthInType" column="BANDWIDTH_IN_TYPE" jdbcType="INTEGER"/>
+        <result property="bandwidthInValue" column="BANDWIDTH_IN_VALUE" jdbcType="INTEGER"/>
+        <result property="appendIpPrice" column="APPEND_IP_PRICE" jdbcType="NUMERIC"/>
+        <result property="appendIpStatus" column="APPEND_IP_STATUS" jdbcType="INTEGER"/>
+        <result property="defenseSize" column="DEFENSE_SIZE" jdbcType="VARCHAR"/>
+        <result property="defenseFreeSize" column="DEFENSE_FREE_SIZE" jdbcType="INTEGER"/>
+        <result property="dataDiskDayPrice" column="DATA_DISK_DAY_PRICE" jdbcType="NUMERIC"/>
+        <result property="dataDiskMonthPrice" column="DATA_DISK_MONTH_PRICE" jdbcType="NUMERIC"/>
+        <result property="defenseDayPrice" column="DEFENSE_DAY_PRICE" jdbcType="NUMERIC"/>
+        <result property="defensePrice" column="DEFENSE_PRICE" jdbcType="NUMERIC"/>
+        <result property="bandwidthDayPrice" column="BANDWIDTH_DAY_PRICE" jdbcType="NUMERIC"/>
+        <result property="bandwidthPrice" column="BANDWIDTH_PRICE" jdbcType="NUMERIC"/>
+        <result property="autoDns" column="AUTO_DNS" typeHandler="com.rxinyun.common.handler.ListToStringTypeHandler"/>
+        <result property="descript" column="DESCRIPT" jdbcType="VARCHAR"/>
+        <result property="introUrl" column="INTRO_URL" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="DELETE_FLAG" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+        <result property="systemDiskMinSize" column="SYSTEM_DISK_MIN_SIZE" jdbcType="INTEGER"/>
+        <result property="systemDiskMaxSize" column="SYSTEM_DISK_MAX_SIZE" jdbcType="INTEGER"/>
+        <result property="systemDiskFreeSize" column="SYSTEM_DISK_FREE_SIZE" jdbcType="INTEGER"/>
+        <result property="systemDiskDayPrice" column="SYSTEM_DISK_DAY_PRICE" jdbcType="NUMERIC"/>
+        <result property="systemDiskMonthPrice" column="SYSTEM_DISK_MONTH_PRICE" jdbcType="NUMERIC"/>
+        <result property="systemDiskStep" column="SYSTEM_DISK_STEP" jdbcType="INTEGER"/>
+        <result property="dockingStatus" column="DOCKING_STATUS" jdbcType="INTEGER"/>
+        <result property="masterCount" column="MASTER_COUNT" jdbcType="INTEGER"/>
+        <result property="serverCount" column="SERVER_COUNT" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectPage" resultMap="ServerLocalLineMap">
+        SELECT sll.*,
+               sar.available_name AS availableName,
+               (SELECT COUNT(1)
+                FROM server_master sm
+                WHERE EXISTS (
+                        SELECT 1
+                        FROM server_master_line sml
+                        WHERE sml.master_id = sm.id
+                          AND sml.line_id = sll.id
+                          AND sml.delete_flag = 'NOT_DELETE'
+                    )
+                  AND sm.delete_flag = 'NOT_DELETE') AS MASTER_COUNT,
+               (SELECT COUNT(1)
+                FROM business_server bs
+                WHERE bs.line_id = sll.id
+                  AND bs.business_status = 1
+                  AND bs.delete_flag = 'NOT_DELETE') AS SERVER_COUNT
+        FROM server_local_line sll
+        LEFT JOIN server_available_region sar ON sll.available_id = sar.id
+        <where>
+            sll.DELETE_FLAG = 'NOT_DELETE'
+            <if test="pageParam.availableId != null and pageParam.availableId != ''">
+                AND sll.available_id = #{pageParam.availableId}
+            </if>
+            <if test="pageParam.searchKey != null">
+                AND sll.line_name LIKE CONCAT('%', #{pageParam.searchKey}, '%')
+            </if>
+        </where>
+        <if test="pageParam.sortField != null and pageParam.sortOrder != null">
+            ORDER BY ${pageParam.sortField} ${pageParam.sortOrder}
+        </if>
+        <if test="pageParam.sortField == null or pageParam.sortOrder == null">
+            ORDER BY sll.SORT_ID
+        </if>
+    </select>
+
+</mapper>
+

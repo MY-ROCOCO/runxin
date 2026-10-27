@@ -1,0 +1,90 @@
+package com.rxinyun.admin.biz.modular.position.param;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public class BizPositionPageParam {
+   @Schema(
+      description = "当前页码"
+   )
+   private Integer current;
+   @Schema(
+      description = "每页条数"
+   )
+   private Integer size;
+   @Schema(
+      description = "排序字段，字段驼峰名称，如：userName"
+   )
+   private String sortField;
+   @Schema(
+      description = "排序方式，升序：ASCEND；降序：DESCEND"
+   )
+   private String sortOrder;
+   @Schema(
+      description = "机构id"
+   )
+   private String orgId;
+   @Schema(
+      description = "岗位分类"
+   )
+   private String category;
+   @Schema(
+      description = "名称关键词"
+   )
+   private String searchKey;
+
+   public Integer getCurrent() {
+      return this.current;
+   }
+
+   public Integer getSize() {
+      return this.size;
+   }
+
+   public String getSortField() {
+      return this.sortField;
+   }
+
+   public String getSortOrder() {
+      return this.sortOrder;
+   }
+
+   public String getOrgId() {
+      return this.orgId;
+   }
+
+   public String getCategory() {
+      return this.category;
+   }
+
+   public String getSearchKey() {
+      return this.searchKey;
+   }
+
+   public void setCurrent(final Integer current) {
+      this.current = current;
+   }
+
+   public void setSize(final Integer size) {
+      this.size = size;
+   }
+
+   public void setSortField(final String sortField) {
+      this.sortField = sortField;
+   }
+
+   public void setSortOrder(final String sortOrder) {
+      this.sortOrder = sortOrder;
+   }
+
+   public void setOrgId(final String orgId) {
+      this.orgId = orgId;
+   }
+
+   public void setCategory(final String category) {
+      this.category = category;
+   }
+
+   public void setSearchKey(final String searchKey) {
+      this.searchKey = searchKey;
+   }
+}

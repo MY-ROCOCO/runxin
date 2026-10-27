@@ -1,0 +1,3 @@
+-- 工单聊天支持图片 base64，TEXT 容量不足时会报 Data too long
+ALTER TABLE `WORK_ORDER_MESSAGE`
+    MODIFY COLUMN `MESSAGE_CONTENT` MEDIUMTEXT COMMENT '消息对话信息';

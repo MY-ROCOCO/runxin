@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.business.modular.esc.mapper.MemberServerPortMapper">
+    <delete id="deletePort">
+        DELETE FROM business_server_ports WHERE MASTER_IP = #{masterId} AND public_port = #{port}
+    </delete>
+    <delete id="delete">
+        DELETE FROM business_server_ports WHERE SERVER_ID = #{serverId}
+    </delete>
+    <delete id="deleteByIds">
+        DELETE FROM business_server_ports WHERE ID IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkPortExist" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM business_server_ports WHERE MASTER_ID = #{masterId} AND public_port = #{port}
+    </select>
+</mapper>

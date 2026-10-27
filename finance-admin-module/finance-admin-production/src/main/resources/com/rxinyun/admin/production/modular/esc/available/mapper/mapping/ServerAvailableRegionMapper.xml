@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.production.modular.esc.available.mapper.ServerAvailableRegionMapper">
+
+    <resultMap type="com.rxinyun.admin.production.modular.esc.available.entity.ServerAvailableRegion" id="ServerAvailableRegionMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="availableName" column="AVAILABLE_NAME" jdbcType="VARCHAR"/>
+        <result property="maxYear" column="MAX_YEAR" jdbcType="INTEGER"/>
+        <result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+        <result property="address" column="ADDRESS" jdbcType="VARCHAR"/>
+        <result property="dcimControllerGuid" column="DCIM_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="ipmiControllerGuid" column="IPMI_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="serverControllerGuid" column="SERVER_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="novncControllerGuid" column="NOVNC_CONTROLLER_GUID" jdbcType="VARCHAR"/>
+        <result property="icpStatus" column="ICP_STATUS" jdbcType="INTEGER"/>
+        <result property="whiteListStatus" column="WHITE_LIST_STATUS" jdbcType="INTEGER"/>
+        <result property="casualVlanStatus" column="CASUAL_VLAN_STATUS" jdbcType="INTEGER"/>
+        <result property="casualVlanId" column="CASUAL_VLAN_ID" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- ServerAvailableRegionMapper.xml -->
+    <select id="selectPage" resultMap="ServerAvailableRegionMap">
+        SELECT sar.*, sr.region_name AS regionName
+        FROM server_available_region sar
+        LEFT JOIN server_region sr ON sar.region_id = sr.id
+        <where>
+            sar.DELETE_FLAG = 'NOT_DELETE'
+            <if test="pageParam.regionId != null and pageParam.regionId != ''">
+                AND sar.region_id = #{pageParam.regionId}
+            </if>
+            <if test="pageParam.searchKey != null">
+                AND sar.available_name LIKE CONCAT('%', #{pageParam.searchKey}, '%')
+            </if>
+        </where>
+        <if test="pageParam.sortField != null and pageParam.sortOrder != null">
+            ORDER BY ${pageParam.sortField} ${pageParam.sortOrder}
+        </if>
+        <if test="pageParam.sortField == null or pageParam.sortOrder == null">
+            ORDER BY sar.SORT_ID
+        </if>
+    </select>
+
+
+</mapper>
+

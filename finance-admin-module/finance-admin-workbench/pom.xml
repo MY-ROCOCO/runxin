@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.rxinyun</groupId>
+        <artifactId>finance-admin-module</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>finance-admin-workbench</artifactId>
+    <packaging>jar</packaging>
+    <description>工作台功能插件</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-workorder-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-order-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-client-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rxinyun</groupId>
+            <artifactId>finance-plugin-business-api</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

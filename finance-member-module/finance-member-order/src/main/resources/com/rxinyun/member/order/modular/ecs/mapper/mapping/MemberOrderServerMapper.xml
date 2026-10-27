@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.order.modular.ecs.mapper.MemberOrderServerMapper">
+
+    <resultMap type="com.rxinyun.member.order.modular.ecs.entity.MemberOrderServer" id="OrderServerMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="serverId" column="SERVER_ID" jdbcType="VARCHAR"/>
+        <result property="serverName" column="SERVER_NAME" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>
+

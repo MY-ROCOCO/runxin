@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.member.order.modular.ecs.mapper.MemberOrderMapper">
+
+    <resultMap type="com.rxinyun.member.order.modular.ecs.entity.MemberOrder" id="OrdersMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="productType" column="PRODUCT_TYPE" jdbcType="INTEGER"/>
+        <result property="orderType" column="ORDER_TYPE" jdbcType="INTEGER"/>
+        <result property="orderStatus" column="ORDER_STATUS" jdbcType="VARCHAR"/>
+        <result property="memberNo" column="MEMBER_NO" jdbcType="INTEGER"/>
+        <result property="memberName" column="MEMBER_NAME" jdbcType="VARCHAR"/>
+        <result property="memberPhone" column="MEMBER_PHONE" jdbcType="VARCHAR"/>
+        <result property="totalPrice" column="TOTAL_PRICE" jdbcType="NUMERIC"/>
+        <result property="payPrice" column="PAY_PRICE" jdbcType="NUMERIC"/>
+        <result property="originalOrderNo" column="ORIGINAL_ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="payTime" column="PAY_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="payOrderNo" column="PAY_ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="payType" column="PAY_TYPE" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectByServerId" resultMap="OrdersMap">
+        SELECT
+            O.*
+        FROM
+            ORDERS O JOIN ORDER_SERVER S ON O.ORDER_NO = S.ORDER_NO
+        WHERE O.ORDER_STATUS = #{orderStatus} AND
+            S.SERVER_ID = #{serverId}
+    </select>
+    <select id="selectPaidRefundableOrdersByServerIdAndMemberNo" resultMap="OrdersMap">
+        SELECT DISTINCT
+            O.*
+        FROM ORDERS O
+        WHERE O.ORDER_STATUS = 1
+          AND O.MEMBER_NO = #{memberNo}
+          AND O.PRODUCT_TYPE IN (1, 2, 5)
+          AND (
+            EXISTS (
+                SELECT 1 FROM ORDER_SERVER S
+                WHERE S.ORDER_NO = O.ORDER_NO
+                  AND S.SERVER_ID = #{serverId}
+            )
+            OR O.ORDER_NO IN (
+                SELECT BV.ORDER_NO FROM BUSINESS_VHOST BV
+                WHERE BV.ID = #{serverId}
+                  AND (BV.DELETE_FLAG IS NULL OR BV.DELETE_FLAG = 'NOT_DELETE')
+                  AND BV.ORDER_NO IS NOT NULL
+            )
+            OR O.ORDER_NO IN (
+                SELECT BV.LAST_ORDER_NO FROM BUSINESS_VHOST BV
+                WHERE BV.ID = #{serverId}
+                  AND (BV.DELETE_FLAG IS NULL OR BV.DELETE_FLAG = 'NOT_DELETE')
+                  AND BV.LAST_ORDER_NO IS NOT NULL
+            )
+            OR EXISTS (
+                SELECT 1 FROM vhost_order_config C
+                WHERE C.ORDER_NO = O.ORDER_NO
+                  AND C.HOST_ID = #{serverId}
+            )
+          )
+    </select>
+    <select id="selectLatestByServerId" resultMap="OrdersMap">
+        SELECT
+            O.*
+        FROM
+            ORDERS O JOIN ORDER_SERVER S ON O.ORDER_NO = S.ORDER_NO
+        WHERE O.ORDER_STATUS = 1
+          AND S.SERVER_ID = #{serverId}
+          AND O.ORDER_STATUS = 1
+        ORDER BY
+            O.CREATE_TIME DESC
+        LIMIT 1
+    </select>
+</mapper>
+

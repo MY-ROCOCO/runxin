@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rxinyun.admin.order.modular.ecs.mapper.OrderMapper">
+
+    <resultMap type="com.rxinyun.admin.order.modular.ecs.entity.Order" id="OrdersMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="productType" column="PRODUCT_TYPE" jdbcType="INTEGER"/>
+        <result property="orderType" column="ORDER_TYPE" jdbcType="INTEGER"/>
+        <result property="orderStatus" column="ORDER_STATUS" jdbcType="VARCHAR"/>
+        <result property="memberNo" column="MEMBER_NO" jdbcType="INTEGER"/>
+        <result property="memberName" column="MEMBER_NAME" jdbcType="VARCHAR"/>
+        <result property="memberPhone" column="MEMBER_PHONE" jdbcType="VARCHAR"/>
+        <result property="totalPrice" column="TOTAL_PRICE" jdbcType="NUMERIC"/>
+        <result property="payPrice" column="PAY_PRICE" jdbcType="NUMERIC"/>
+        <result property="originalOrderNo" column="ORIGINAL_ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="payTime" column="PAY_TIME" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="payOrderNo" column="PAY_ORDER_NO" jdbcType="VARCHAR"/>
+        <result property="payType" column="PAY_TYPE" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectLatestByServerId" resultMap="OrdersMap">
+        SELECT O.*
+        FROM ORDERS O
+        WHERE O.ORDER_STATUS = 1
+          AND (
+            EXISTS (
+                SELECT 1 FROM ORDER_SERVER S
+                WHERE S.ORDER_NO = O.ORDER_NO AND S.SERVER_ID = #{serverId}
+            )
+            OR O.ORDER_NO = (
+                SELECT BS.ORDER_NO FROM BUSINESS_SERVER BS
+                WHERE BS.ID = #{serverId} AND BS.DELETE_FLAG = 'NOT_DELETE'
+            )
+          )
+        ORDER BY O.CREATE_TIME DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectLatestPaidOrderForRenew" resultMap="OrdersMap">
+        SELECT O.*
+        FROM ORDERS O
+        WHERE O.ORDER_STATUS = 1
+          AND (
+            EXISTS (
+                SELECT 1 FROM ORDER_SERVER S
+                WHERE S.ORDER_NO = O.ORDER_NO AND S.SERVER_ID = #{serverId}
+            )
+            OR O.ORDER_NO = (
+                SELECT BS.ORDER_NO FROM BUSINESS_SERVER BS
+                WHERE BS.ID = #{serverId} AND BS.DELETE_FLAG = 'NOT_DELETE'
+            )
+          )
+        ORDER BY O.CREATE_TIME DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectByServerId" resultMap="OrdersMap">
+        SELECT
+            O.*
+        FROM
+            ORDERS O JOIN ORDER_SERVER S ON O.ORDER_NO = S.ORDER_NO
+        WHERE O.ORDER_STATUS = #{orderStatus} AND
+            S.SERVER_ID = #{serverId}
+    </select>
+
+    <!-- 退款：ORDER_SERVER；云机 BUSINESS_SERVER.ORDER_NO；虚拟主机 BUSINESS_VHOST 订单号与 vhost_order_config.HOST_ID -->
+    <select id="selectPaidRefundableOrdersByServerIds" resultType="com.rxinyun.admin.order.modular.ecs.entity.Order">
+        SELECT DISTINCT O.*
+        FROM ORDERS O
+        WHERE O.ORDER_STATUS = 1
+          AND O.PRODUCT_TYPE IN (1, 2, 5)
+          <if test="memberNo != null">
+            AND O.MEMBER_NO = #{memberNo}
+          </if>
+          AND (
+            EXISTS (
+                SELECT 1 FROM ORDER_SERVER S
+                WHERE S.ORDER_NO = O.ORDER_NO
+                  AND S.SERVER_ID IN
+                  <foreach collection="serverIds" item="sid" open="(" separator="," close=")">
+                      #{sid}
+                  </foreach>
+            )
+            OR O.ORDER_NO IN (
+                SELECT BS.ORDER_NO FROM BUSINESS_SERVER BS
+                WHERE BS.ID IN
+                  <foreach collection="serverIds" item="sid" open="(" separator="," close=")">
+                      #{sid}
+                  </foreach>
+                  AND (BS.DELETE_FLAG IS NULL OR BS.DELETE_FLAG = 'NOT_DELETE')
+                  AND BS.ORDER_NO IS NOT NULL
+            )
+            OR O.ORDER_NO IN (
+                SELECT BV.ORDER_NO FROM BUSINESS_VHOST BV
+                WHERE BV.ID IN
+                  <foreach collection="serverIds" item="sid" open="(" separator="," close=")">
+                      #{sid}
+                  </foreach>
+                  AND (BV.DELETE_FLAG IS NULL OR BV.DELETE_FLAG = 'NOT_DELETE')
+                  AND BV.ORDER_NO IS NOT NULL
+            )
+            OR O.ORDER_NO IN (
+                SELECT BV.LAST_ORDER_NO FROM BUSINESS_VHOST BV
+                WHERE BV.ID IN
+                  <foreach collection="serverIds" item="sid" open="(" separator="," close=")">
+                      #{sid}
+                  </foreach>
+                  AND (BV.DELETE_FLAG IS NULL OR BV.DELETE_FLAG = 'NOT_DELETE')
+                  AND BV.LAST_ORDER_NO IS NOT NULL
+            )
+            OR EXISTS (
+                SELECT 1 FROM vhost_order_config C
+                WHERE C.ORDER_NO = O.ORDER_NO
+                  AND C.HOST_ID IN
+                  <foreach collection="serverIds" item="sid" open="(" separator="," close=")">
+                      #{sid}
+                  </foreach>
+            )
+          )
+    </select>
+</mapper>
+
